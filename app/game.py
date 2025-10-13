@@ -2,49 +2,42 @@ import random
 
 
 # Wave 1
-def generate_code():
-    valid_letters = ['R', 'O', 'Y', 'G', 'B', 'P']
-    code = []
-    
-    # Generate a code of 4 random letters from valid_letters
-    for _ in range(4):
-        code.append(random.choice(valid_letters))
+VALID_LETTERS = {'R', 'O', 'Y', 'G', 'B', 'P'}
 
-    return code
+def generate_code():
+    # Generate a code of 4 random letters from valid_letters      
+    letters_list = list(VALID_LETTERS)
+    return [random.choice(letters_list) for _ in range(4)]
 
 
 def validate_guess(guess):
-    valid_letters = {'R', 'O', 'Y', 'G', 'B', 'P'}
-
     # Exit early if guess is not exactly 4 elements long
     if len(guess) != 4:
         return False
     
     # Convert guess to uppercase for case-insensitive comparison
-    uppercased_guess = []
-    for letter in guess:
-        uppercased_guess.append(str(letter).upper())
+    uppercased_guess = normalize_code(guess)
 
     # Return False if we find an invalid element of guess
-    for letter in uppercased_guess:
-        if letter not in valid_letters:
-            return False
-        
-    return True
-
+    return all(letter in VALID_LETTERS for letter in uppercased_guess)
+    # for letter in uppercased_guess:
+    #     if letter not in VALID_LETTERS:
+    #         return False
+    # return True
 
 def check_code_guessed(guess, code):
     # Convert guess to uppercase for case-insensitive comparison
-    uppercased_guess = []
-    for letter in guess:
-        uppercased_guess.append(str(letter).upper())
+    uppercased_guess = normalize_code(guess)
 
     # Check if the guess and code are identical (win condition)
-    if code == uppercased_guess:
-        return True
-    else: # Code has not been guessed
-        return False
+    return code == uppercased_guess
+    
 
+def normalize_code(code):
+    """
+    Normalize the casing for a code by converting the list of characters to uppercase.
+    """
+    return [str(letter).upper() for letter in code]
 
 # Wave 2
 # Add your Wave 2 functions here
