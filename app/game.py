@@ -64,10 +64,6 @@ def correct_pos_and_color(guess, code):
     for i in range(len(guess)):
         if guess[i] == code[i]:
             count += 1
-    # for i, peg in enumerate(guess):
-    #     if peg == code[i]:
-    #         count += 1
-
     return count
 
 def generate_hint(guess, code):
@@ -77,4 +73,18 @@ def generate_hint(guess, code):
 
 
 # Wave 3
-# Add your Wave 3 functions here
+def get_win_percentage(wins, plays):
+    if plays > 0:
+        return int(wins / plays * 100)
+    return 0
+
+
+def format_guess_stats(guess_stats):
+    result = []
+    counter = 1
+    ROUNDS = 8
+    for round in range(1, ROUNDS + 1):
+        won = guess_stats.get(round, 0) # won may be missings so set 0
+        result.append("" if won == 0 else 'X' * won)
+        counter += 1
+    return result
