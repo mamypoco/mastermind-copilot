@@ -1,6 +1,5 @@
 import random
 
-
 # Wave 1
 VALID_LETTERS = {'R', 'O', 'Y', 'G', 'B', 'P'}
 
@@ -40,7 +39,41 @@ def normalize_code(code):
     return [str(letter).upper() for letter in code]
 
 # Wave 2
-# Add your Wave 2 functions here
+def color_count(guess, code):
+    # returns an integer representing the number of pegs that are the correct color (letter), regardless of whether they are in the correct position or not
+
+    # if no pegs are the correct color, return 0
+
+    # A letter that appears more times in guess than it appears in code is counted the number of times it appears in code
+
+    # A letter that appears fewer times in guess than it appears in code is counted the number of times it appears in guess
+
+    count = 0
+    # Count the number of times each color appears in both guess and code, and sum the minimum for each color
+    for letter in set(guess):
+        count += min(guess.count(letter), code.count(letter))
+    return count
+
+guess = ['R', 'R', 'G', 'P']
+code = ['R', 'R', 'O', 'B']
+print(color_count(guess, code))
+
+
+def correct_pos_and_color(guess, code):
+    count = 0
+    for i in range(len(guess)):
+        if guess[i] == code[i]:
+            count += 1
+    # for i, peg in enumerate(guess):
+    #     if peg == code[i]:
+    #         count += 1
+
+    return count
+
+def generate_hint(guess, code):
+    correct_pos = correct_pos_and_color(guess, code)
+    correct_color = color_count(guess, code) - correct_pos
+    return (correct_pos, correct_color)
 
 
 # Wave 3
